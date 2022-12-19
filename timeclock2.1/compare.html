@@ -18,7 +18,7 @@
     <link href="./style.css" rel="stylesheet">
   </head>
 
-  <body onload="createTable()">
+  <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -51,27 +51,34 @@
 
     <main role="main" class="container">
 
-      <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <div class="col-md-7 col-lg-8">
-          <br>
-          <p>
-
-<!-- Name input -->
-<div class="form-outline mb-4">
-  <input type="text" id="glassBoxIdentifier" class="form-control" />
-  <label class="form-label" for="form4Example1">Blue Print Name</label>
-</div>
-
-<div id="cont"></div>  <!-- the container to add the TABLE -->
-<input type="button" id="addRow" value="Add New Row" onclick="addRow()" />
-</p>
-<p>
-<input type="button" id="bt" value="Submit Data" onclick="submit()" />
-</p>
-
-
-    </main><!-- /.container -->
+        <div class="starter-template">
+          <h1>Bootstrap starter template</h1>
+          <div class="col-md-7 col-lg-8">
+            <br>
+            <form id="createGlassBox">
+              <!-- Name input -->
+              <div class="form-outline mb-4">
+                <input type="text" id="bluePrintName" class="form-control" />
+                <label class="form-label" for="form4Example1">Blue print name</label>
+              </div>
+              <!-- Name input -->
+              <div class="form-outline mb-4">
+                <input type="text" id="glassBoxIdentifier" class="form-control" />
+                <label class="form-label" for="form4Example1">Glass box identifier</label>
+              </div>
+              <!-- Message input -->
+              <div class="form-outline mb-4">
+                <textarea class="form-control" id="compareResult" rows="4"></textarea>
+                <label class="form-label" for="form4Example3">Glass Box Data</label>
+              </div>
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block mb-4">Send</button>
+            </form>
+          </div>
+          <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+        </div>
+  
+      </main><!-- /.container -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

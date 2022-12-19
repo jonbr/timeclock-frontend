@@ -1,8 +1,4 @@
 
-console.log("jon");
-//const reload = window.location.reload();
-//console.log(reload);
-
 const loginRadio = document.querySelector
 
 const header = document.querySelector('.bg-dark ');
@@ -71,25 +67,105 @@ if (createGlassBox) {
 	});
 }
 
-//const myArray = [];
-const createBluePrint = document.getElementById('createBluePrint');
-if (createBluePrint) {
-	//console.log(createBluePrint)
-	createBluePrint.addEventListener('submit', event => {
-		console.log("---createBluePrint---");
-		event.preventDefault();
+		let arrHead = new Array();	// array for header.
+        arrHead = ['', 'Weight', 'Height', 'Thickness', 'Quantity'];
+      
+        // first create TABLE structure with the headers. 
+        let createTable = () => {
+          let empTable = document.createElement('table');
+          empTable.setAttribute('class', 'table table-bordered');
+          empTable.setAttribute('id', 'empTable'); // table id.
+      
+          let tr = empTable.insertRow(-1);
+          for (let h = 0; h < arrHead.length; h++) {
+            let th = document.createElement('th'); // create table headers
+            th.innerHTML = arrHead[h];
+            tr.appendChild(th);
+          }
+      
+          let div = document.getElementById('cont');
+          div.appendChild(empTable);  // add the TABLE to the container.
+        }
+      
+        // now, add a new row to the TABLE.
+        let addRow = () => {
+          let empTab = document.getElementById('empTable');
+      
+          let rowCnt = empTab.rows.length;   // table row count.
+          let tr = empTab.insertRow(rowCnt); // the table row.
+          tr = empTab.insertRow(rowCnt);
+      
+          for (let c = 0; c < arrHead.length; c++) {
+            let td = document.createElement('td'); // table definition.
+            td = tr.insertCell(c);
+      
+            if (c === 0) {      // the first column.
+              // add a button in every new row in the first column.
+              let button = document.createElement('input');
+      
+              // set input attributes.
+              button.setAttribute('type', 'button');
+              button.setAttribute('value', 'Remove');
+      
+              // add button's 'onclick' event.
+              button.setAttribute('onclick', 'removeRow(this)');
+      
+              td.appendChild(button);
+            }
+            else {
+              // 2nd, 3rd and 4th column, will have textbox.
+              let ele = document.createElement('input');
+              ele.setAttribute('type', 'text');
+              ele.setAttribute('value', '');
+      
+              td.appendChild(ele);
+            }
+          }
+        }
+      
+        // delete TABLE row function.
+        let removeRow = (oButton) => {
+          let empTab = document.getElementById('empTable');
+          empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); 
+          // button -> td -> tr.
+        }
+      
+        // function to extract and submit table data.
+        let submit = () => {
+          let myTab = document.getElementById('empTable');
+          let arrValues1 = new Array();
 
-		var tds = document.querySelectorAll('#childTable tr');
-		tds.forEach((userItem) => {
-			var tmoVar = userItem.find('td').each(function(){
-				console.log(tmoVar)
+		   let measurements = [];
+          
+          // loop through each row of the table.
+			for (var i = 1, row; row = myTab.rows[i]; i++) {
+				//console.log(row)
+				//iterate through rows
+				//rows would be accessed using the "row" variable assigned in the for loop
+				for (var j = 1, col; col = row.cells[j]; j++) {
+					//iterate through columns
+					//columns would be accessed using the "col" variable assigned in the for loop
+					let measurement = {
+						"width": row.cells[j].childNodes[0].value,
+						"height": row.cells[j+1].childNodes[0].value,
+						"thickness": row.cells[j+2].childNodes[0].value,
+						"quantity": row.cells[j+3].childNodes[0].value
+					}
+					measurements.push(measurement);
+					break;
+				}
+				console.log("------")
 			}
-		});
 
-		const createBluePrintResponse = apiCall("POST", 'inventory/blueprint/', 'glassBoxData', true);
-		console.log("createBluePrintResponse: ", createBluePrintResponse);
-	});
-}
+			const payload = {
+				name: "HLID-11A",
+				measurements
+			};
+
+		  console.log(payload)
+		  const createBluePrintResponse = apiCall('POST', 'inventory/blueprint/', payload, true);
+		  console.log("createBluePrintResponse: ", createBluePrintResponse);
+        }
 
 const apiCall = async (method, path, payload, isJson) => {
 	//preventDefault();
@@ -97,17 +173,16 @@ const apiCall = async (method, path, payload, isJson) => {
 	contentType = isJson ? 'application/json' : 'text/plain'
 	let options = {
 		//credentials: 'omit',
-        method,
+        method: 'POST',
 		headers: {
 			//'Content-Type': 'application/json',
 			'Content-Type': contentType,
 			//'Accept': 'application/json',
-			'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ldyB1c2VybmFtZTIiLCJlbWFpbCI6InRvbW1pQGxhdXJhLm5ldCIsImV4cCI6MTY3MDM2Nzg4MH0.7QAO-KhjESRbHWSM6g8NL2_fXFTssI7LCDnRAuGvr28'
+			'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ldyB1c2VybmFtZTIiLCJlbWFpbCI6InRvbW1pQGxhdXJhLm5ldCIsImV4cCI6MTY3MDk0NDY5Mn0.iOV4wTHcAYu2YBusRUpLWz9YbtBOmvC6vf33mjtUQvM'
 		},
   	};
   	if ( method === 'POST' ) {
-    	//url += '?' + ( new URLSearchParams( params ) ).toString();
-    	//options.body = JSON.stringify( payload );
+		console.log("POST method")
 		options.body = isJson ? JSON.stringify(payload) : payload;
  	}
   	console.log("options: ", options);
