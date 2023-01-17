@@ -178,7 +178,7 @@ const apiCall = async (method, path, payload, isJson) => {
 			//'Content-Type': 'application/json',
 			'Content-Type': contentType,
 			//'Accept': 'application/json',
-			'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ldyB1c2VybmFtZTIiLCJlbWFpbCI6InRvbW1pQGxhdXJhLm5ldCIsImV4cCI6MTY3MDk0NDY5Mn0.iOV4wTHcAYu2YBusRUpLWz9YbtBOmvC6vf33mjtUQvM'
+			'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ldyB1c2VybmFtZTIiLCJlbWFpbCI6InRvbW1pQGxhdXJhLm5ldCIsImV4cCI6MTY3MTQ4ODgxOH0.r_6r0CVPS34OQS0qyeUf0yTjFPvqgr-BA2BUHnm5W98'
 		},
   	};
   	if ( method === 'POST' ) {
